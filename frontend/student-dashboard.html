@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏰 Disney Residence - Student Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b69 30%, #6C3CE1 70%, #FF6B9D 100%);
+            color: #e0d9f0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== DISNEY CHARACTER SILHOUETTES ===== */
+        .disney-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.06;
+        }
+
+        .character {
+            position: absolute;
+            font-size: 120px;
+            animation: floatCharacter 30s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 30px rgba(255,184,0,0.1));
+        }
+
+        .character:nth-child(1) { top: 5%; left: 3%; animation-delay: 0s; font-size: 150px; }
+        .character:nth-child(2) { bottom: 10%; right: 2%; animation-delay: 5s; font-size: 130px; }
+        .character:nth-child(3) { top: 40%; right: 8%; animation-delay: 10s; font-size: 100px; }
+        .character:nth-child(4) { bottom: 20%; left: 5%; animation-delay: 3s; font-size: 110px; }
+        .character:nth-child(5) { top: 60%; left: 15%; animation-delay: 7s; font-size: 90px; }
+        .character:nth-child(6) { top: 15%; right: 15%; animation-delay: 12s; font-size: 80px; }
+
+        @keyframes floatCharacter {
+            0% { transform: translate(0, 0) rotate(-5deg) scale(1); }
+            100% { transform: translate(30px, -20px) rotate(5deg) scale(1.05); }
+        }
+
+        /* ===== MAGIC STARS ===== */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 18px;
+            animation: floatStar 12s infinite ease-in-out;
+            opacity: 0.15;
+            color: #FFB800;
+        }
+
+        @keyframes floatStar {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.15; }
+            50% { transform: translateY(-80px) rotate(180deg) scale(1.5); opacity: 0.4; }
+        }
+
+        /* ===== GLASS CARD ===== */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 28px 40px;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0 20px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .top-bar .greeting h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .top-bar .greeting h1 .wave {
+            animation: wave 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        .top-bar .greeting .room-badge {
+            background: rgba(255, 184, 0, 0.15);
+            border: 1px solid rgba(255, 184, 0, 0.15);
+            padding: 4px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #FFB800;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        .top-bar .greeting .sub-text {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .top-bar .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar .actions .logout-btn {
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.12);
+            color: #FF6B9D;
+            padding: 8px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .top-bar .actions .logout-btn:hover {
+            background: rgba(255, 107, 157, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== STATS CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 18px 22px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-3px);
+            border-color: rgba(255, 184, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .stat-card .icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== PANIC BUTTON ===== */
+        .panic-container {
+            background: rgba(255, 0, 0, 0.03);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .panic-container .panic-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        #panicButton {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: 4px solid rgba(255, 0, 0, 0.3);
+            color: white;
+            font-size: 52px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
+            touch-action: none;
+            user-select: none;
+            position: relative;
+        }
+
+        #panicButton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 80px rgba(255, 0, 0, 0.3);
+        }
+
+        #panicButton:active {
+            transform: scale(0.95);
+        }
+
+        #panicButton .pulse-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 0, 0, 0.2);
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        .panic-container .panic-hint {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+        }
+
+        /* ===== TAB NAVIGATION ===== */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 184, 0, 0.1);
+            color: #FFB800;
+            border: 1px solid rgba(255, 184, 0, 0.08);
+        }
+
+        .tab-btn .badge {
+            background: rgba(255, 107, 157, 0.12);
+            color: #FF6B9D;
+            padding: 0 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARD STYLES ===== */
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .card-title .count {
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.4);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FFB800;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 30px rgba(255, 184, 0, 0.05);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group select option {
+            background: #1a0a2e;
+            color: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #FFB800, #FF6B9D);
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            color: #1a0a2e;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(255, 184, 0, 0.15);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 184, 0, 0.25);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-rsvp {
+            background: rgba(255, 184, 0, 0.08);
+            border: 1px solid rgba(255, 184, 0, 0.1);
+            color: #FFB800;
+            padding: 5px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-rsvp:hover {
+            background: rgba(255, 184, 0, 0.15);
+        }
+
+        .btn-rsvp.rsvped {
+            background: rgba(0, 255, 150, 0.08);
+            border-color: rgba(0, 255, 150, 0.15);
+            color: #00ff96;
+        }
+
+        .btn-rsvp.rsvped:hover {
+            background: rgba(0, 255, 150, 0.15);
+        }
+
+        /* ===== TABLES ===== */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        th {
+            padding: 10px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 10px 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        td .status {
+            padding: 2px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        td .status.pending {
+            background: rgba(255, 184, 0, 0.1);
+            color: #FFB800;
+        }
+
+        td .status.in-progress {
+            background: rgba(108, 60, 225, 0.12);
+            color: #8B6CE6;
+        }
+
+        td .status.resolved {
+            background: rgba(0, 255, 150, 0.08);
+            color: #00ff96;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .empty-state .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 14px;
+            z-index: 2000;
+            display: none;
+            animation: slideUp 0.4s ease;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .toast.success {
+            background: rgba(0, 255, 150, 0.08);
+            border-color: rgba(0, 255, 150, 0.12);
+            color: #00ff96;
+        }
+
+        .toast.error {
+            background: rgba(255, 107, 157, 0.08);
+            border-color: rgba(255, 107, 157, 0.12);
+            color: #FF6B9D;
+        }
+
+        .toast.info {
+            background: rgba(108, 60, 225, 0.08);
+            border-color: rgba(108, 60, 225, 0.12);
+            color: #8B6CE6;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(15px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 10, 46, 0.95);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 550px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .modal-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .modal-content p {
+            color: rgba(255,255,255,0.4);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .modal-content .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .modal-content .modal-actions button {
+            padding: 12px 32px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-content .modal-actions .cancel {
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.5);
+        }
+
+        .modal-content .modal-actions .cancel:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .modal-content .modal-actions .confirm {
+            background: #FF6B9D;
+            color: white;
+        }
+
+        .modal-content .modal-actions .confirm:hover {
+            background: #e85a8a;
+        }
+
+        /* Emergency Type Grid */
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .emergency-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .emergency-option:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .emergency-option .emoji {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .emergency-option .label {
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .emergency-option.medical:hover { border-color: rgba(0, 200, 255, 0.4); }
+        .emergency-option.fire:hover { border-color: rgba(255, 0, 0, 0.4); }
+        .emergency-option.rape:hover { border-color: rgba(255, 0, 100, 0.4); }
+        .emergency-option.robbery:hover { border-color: rgba(255, 184, 0, 0.4); }
+
+        /* Emergency Report Modal */
+        .modal-content.report-modal {
+            text-align: left;
+        }
+
+        .modal-content.report-modal .report-section {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content.report-modal .report-section .label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-content.report-modal .report-section .value {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+        .modal-content.report-modal .report-section .value.highlight {
+            color: #FFB800;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .top-bar .greeting h1 {
+                font-size: 20px;
+            }
+            .top-bar .actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .tab-btn {
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+            .character {
+                font-size: 60px !important;
+                opacity: 0.4;
+            }
+            .emergency-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            #panicButton {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+            .modal-content {
+                padding: 20px;
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-card .value {
+                font-size: 22px;
+            }
+            .card {
+                padding: 16px;
+            }
+            .character {
+                display: none;
+            }
+            .emergency-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .emergency-option {
+                padding: 14px;
+            }
+            .emergency-option .emoji {
+                font-size: 24px;
+            }
+            .emergency-option .label {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== DISNEY CHARACTER SILHOUETTES ===== -->
+    <div class="disney-bg">
+        <div class="character">🏰</div>
+        <div class="character">⭐</div>
+        <div class="character">🌈</div>
+        <div class="character">🎠</div>
+        <div class="character">🌙</div>
+        <div class="character">🦁</div>
+    </div>
+
+    <!-- ===== MAGIC STARS ===== -->
+    <div class="stars">
+        <div class="star" style="top: 5%; left: 10%; animation-delay: 0s;">✦</div>
+        <div class="star" style="top: 15%; right: 5%; animation-delay: 1.5s;">✦</div>
+        <div class="star" style="bottom: 25%; left: 3%; animation-delay: 3s;">✦</div>
+        <div class="star" style="bottom: 15%; right: 8%; animation-delay: 2s;">✦</div>
+        <div class="star" style="top: 45%; left: 2%; animation-delay: 4s;">✦</div>
+        <div class="star" style="top: 35%; right: 2%; animation-delay: 5s;">✦</div>
+        <div class="star" style="top: 70%; left: 8%; animation-delay: 2.5s;">✦</div>
+        <div class="star" style="top: 80%; right: 4%; animation-delay: 3.5s;">✦</div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content">
+
+        <!-- ===== TOP BAR ===== -->
+        <div class="top-bar">
+            <div class="greeting">
+                <h1>
+                    <span class="wave">👋</span>
+                    Welcome back, <span style="color:#FFB800;" id="studentName">Student</span>
+                    <span class="room-badge" id="roomBadge">🏠 Room 000</span>
+                </h1>
+                <div class="sub-text">
+                    ✨ Disney Residence · Where Magic Meets Comfort
+                </div>
+            </div>
+            <div class="actions">
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+            </div>
+        </div>
+
+        <!-- ===== QUICK STATS ===== -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">🏠</div>
+                <div class="value" id="myRoom">---</div>
+                <div class="label">Your Room</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📋</div>
+                <div class="value" id="myReports">0</div>
+                <div class="label">Your Reports</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📅</div>
+                <div class="value" id="upcomingEvents">0</div>
+                <div class="label">Upcoming Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">✅</div>
+                <div class="value" id="resolvedReports">0</div>
+                <div class="label">Resolved Issues</div>
+            </div>
+        </div>
+
+        <!-- ===== PANIC BUTTON ===== -->
+        <div class="panic-container">
+            <div class="panic-label">⚠️ IN CASE OF EMERGENCY</div>
+            <button id="panicButton">
+                <span class="pulse-ring"></span>
+                🚨
+            </button>
+            <div class="panic-hint">Press and hold for 2 seconds</div>
+        </div>
+
+        <!-- ===== TAB NAVIGATION ===== -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="dashboard">
+                🏠 Dashboard
+            </button>
+            <button class="tab-btn" data-tab="report">
+                🛠️ Report Issue
+                <span class="badge">New</span>
+            </button>
+            <button class="tab-btn" data-tab="events">
+                📅 Events
+                <span class="badge" id="eventBadge">0</span>
+            </button>
+            <button class="tab-btn" data-tab="history">
+                📋 My History
+            </button>
+        </div>
+
+        <!-- ===== TAB 1: DASHBOARD ===== -->
+        <div id="tab-dashboard" class="tab-content active">
+
+            <!-- Welcome Card -->
+            <div class="card" style="background: linear-gradient(135deg, rgba(255,184,0,0.05), rgba(108,60,225,0.05)); border-color: rgba(255,184,0,0.06);">
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    <div style="font-size: 48px; filter: drop-shadow(0 0 20px rgba(255,184,0,0.2));">✨</div>
+                    <div>
+                        <h3 style="color: white; font-weight: 700; font-size: 20px;" id="welcomeMessage">Welcome to Disney Residence!</h3>
+                        <p style="color: rgba(255,255,255,0.3); font-size: 14px;">
+                            You're part of a community of <span id="communityCount" style="color:#FFB800; font-weight:600;">0</span> residents.
+                            Report issues, join events, and make the most of your stay! 🏰
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                <div onclick="switchTab('report')" style="background: rgba(255,184,0,0.04); border: 1px solid rgba(255,184,0,0.06); border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s ease; text-align: center; backdrop-filter: blur(10px);">
+                    <div style="font-size: 32px;">🛠️</div>
+                    <div style="font-weight: 600; color: white; margin-top: 4px;">Report Issue</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.2);">Log a maintenance problem</div>
+                </div>
+                <div onclick="switchTab('events')" style="background: rgba(108,60,225,0.04); border: 1px solid rgba(108,60,225,0.06); border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s ease; text-align: center; backdrop-filter: blur(10px);">
+                    <div style="font-size: 32px;">📅</div>
+                    <div style="font-weight: 600; color: white; margin-top: 4px;">View Events</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.2);">See what's happening</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-title">
+                    📋 Your Recent Activity
+                    <span class="count" id="activityCount">(0)</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activityTable">
+                            <tr><td colspan="4" class="empty-state"><div class="icon">📭</div><p>No activity yet</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB 2: REPORT ISSUE ===== -->
+        <div id="tab-report" class="tab-content">
+
+            <div class="card">
+                <div class="card-title">
+                    🛠️ Report a Maintenance Issue
+                    <span class="count">Your room: <span id="reportRoom" style="color:#FFB800;">---</span></span>
+                </div>
+
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label>🏠 Room Number (auto-filled)</label>
+                        <input type="text" id="reportRoomInput" readonly style="opacity:0.6; cursor:not-allowed;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>📂 Category *</label>
+                        <select id="reportCategory" required>
+                            <option value="">Select a category...</option>
+                            <option value="Kitchen">🍳 Kitchen</option>
+                            <option value="Bathroom">🚿 Bathroom</option>
+                            <option value="Electricity">⚡ Electricity</option>
+                            <option value="Plumbing">🔧 Plumbing</option>
+                            <option value="Internet">📶 Internet</option>
+                            <option value="Furniture">🪑 Furniture</option>
+                            <option value="Heating/Cooling">🌡️ Heating/Cooling</option>
+                            <option value="Other">📌 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>📝 Description *</label>
+                        <textarea id="reportDescription" placeholder="Describe the issue in detail... (e.g., The kitchen sink is leaking)" required></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button type="submit" class="btn-submit" style="flex:1; min-width:150px;">
+                            ✨ Submit Report
+                        </button>
+                        <button type="reset" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:14px 24px; color:rgba(255,255,255,0.3); cursor:pointer; transition:all 0.3s ease; font-weight:500;">
+                            Clear
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    📋 Your Recent Reports
+                    <span class="count" id="reportCount">(0)</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTable">
+                            <tr><td colspan="4" class="empty-state"><div class="icon">🔧</div><p>You haven't reported any issues yet</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB 3: EVENTS ===== -->
+        <div id="tab-events" class="tab-content">
+
+            <div class="card">
+                <div class="card-title">
+                    📅 Upcoming Events
+                    <span class="count" id="eventCount">(0 events)</span>
+                </div>
+
+                <div id="eventsList">
+                    <div class="empty-state">
+                        <div class="icon">🎉</div>
+                        <p>No upcoming events scheduled</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(255,184,0,0.02); border-color: rgba(255,184,0,0.04);">
+                <div class="card-title">
+                    💡 Pro Tip
+                </div>
+                <p style="color: rgba(255,255,255,0.4); font-size: 14px;">
+                    RSVP to events to let us know you're coming! 
+                    Your participation makes the community stronger. 🏰
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== TAB 4: HISTORY ===== -->
+        <div id="tab-history" class="tab-content">
+
+            <!-- Activity History -->
+            <div class="card">
+                <div class="card-title">
+                    📋 Complete Activity History
+                    <span class="count" id="historyCount">(0 items)</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTable">
+                            <tr><td colspan="4" class="empty-state"><div class="icon">📭</div><p>No activity recorded</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Emergency History -->
+            <div class="card" style="border-color: rgba(255,0,0,0.1); background: rgba(255,0,0,0.02);">
+                <div class="card-title">
+                    🚨 Your Emergency History
+                    <span class="count" id="emergencyCount">(0)</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="emergencyHistoryTable">
+                            <tr><td colspan="4" class="empty-state"><div class="icon">📭</div><p>No emergency history</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- End of Year Action -->
+            <div class="card" style="border-color: rgba(255,107,157,0.1); background: rgba(255,107,157,0.02);">
+                <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: space-between;">
+                    <div>
+                        <div style="font-weight: 600; color: #FF6B9D; font-size: 16px;">📤 End of Year Checkout</div>
+                        <div style="color: rgba(255,255,255,0.3); font-size: 13px;">
+                            When you're leaving for the year, this will permanently delete your account.
+                        </div>
+                    </div>
+                    <button onclick="confirmDelete()" style="background: rgba(255,107,157,0.08); border: 1px solid rgba(255,107,157,0.12); color: #FF6B9D; padding: 10px 28px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
+                        🗑️ Permanent Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Emergency Type Selection Modal -->
+    <div class="modal-overlay" id="emergencyTypeModal">
+        <div class="modal-content">
+            <div class="icon">🚨</div>
+            <h3>Select Emergency Type</h3>
+            <p>Choose the type of emergency you're experiencing</p>
+            <div class="emergency-grid">
+                <div class="emergency-option medical" onclick="reportEmergency('Medical')">
+                    <span class="emoji">🚑</span>
+                    <span class="label">Medical</span>
+                </div>
+                <div class="emergency-option fire" onclick="reportEmergency('Fire')">
+                    <span class="emoji">🔥</span>
+                    <span class="label">Fire</span>
+                </div>
+                <div class="emergency-option rape" onclick="reportEmergency('Rape')">
+                    <span class="emoji">🆘</span>
+                    <span class="label">Rape</span>
+                </div>
+                <div class="emergency-option robbery" onclick="reportEmergency('Robbery')">
+                    <span class="emoji">👤</span>
+                    <span class="label">Robbery</span>
+                </div>
+            </div>
+            <button onclick="closeEmergencyTypeModal()" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.3); padding:12px; border-radius:12px; cursor:pointer; font-weight:500; font-size:13px; margin-top:8px;">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Emergency Confirmation Modal -->
+    <div class="modal-overlay" id="emergencyConfirmModal">
+        <div class="modal-content" style="border-color: rgba(255,0,0,0.2);">
+            <div class="icon">🚨</div>
+            <h3 style="color: #ff4444;">Emergency Reported!</h3>
+            <p>Admin has been notified. Help is on the way.</p>
+            <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; margin: 12px 0;">
+                <div style="color: rgba(255,255,255,0.3); font-size: 12px;">Type</div>
+                <div style="color: white; font-weight: 600; font-size: 18px;" id="confirmEmergencyType">---</div>
+            </div>
+            <button onclick="closeEmergencyConfirm()" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.3); padding:12px; border-radius:12px; cursor:pointer; font-weight:500; font-size:13px;">
+                I Understand
+            </button>
+        </div>
+    </div>
+
+    <!-- Emergency Report Modal (Student Side) -->
+    <div class="modal-overlay" id="emergencyReportModal">
+        <div class="modal-content report-modal" style="max-width: 550px; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                <div>
+                    <div style="font-size: 13px; color: rgba(255,255,255,0.3);">🚨 Emergency Report #<span id="reportEmergencyId">---</span></div>
+                    <h3 style="color: white; font-weight: 700; font-size: 18px; text-align: left;">Report Details</h3>
+                </div>
+                <span class="status resolved" id="reportEmergencyStatus">Resolved</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                <div class="report-section">
+                    <div class="label">Type</div>
+                    <div class="value highlight" id="reportEmergencyType">---</div>
+                </div>
+                <div class="report-section">
+                    <div class="label">Reported</div>
+                    <div class="value" id="reportEmergencyDate">---</div>
+                </div>
+                <div class="report-section">
+                    <div class="label">Resolved</div>
+                    <div class="value" id="reportEmergencyResolved">---</div>
+                </div>
+                <div class="report-section">
+                    <div class="label">Room</div>
+                    <div class="value" id="reportEmergencyRoom">---</div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <div class="label">📝 Description</div>
+                <div class="value" id="reportEmergencyDescription" style="white-space: pre-wrap;">---</div>
+            </div>
+
+            <div class="report-section" style="background: rgba(255,184,0,0.03); border-left: 3px solid #FFB800;">
+                <div class="label">📋 Full Report</div>
+                <div class="value" id="reportEmergencyFull" style="white-space: pre-wrap;">---</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="report-section" style="background: rgba(0,255,150,0.03);">
+                    <div class="label">🔧 Actions Taken</div>
+                    <div class="value" id="reportEmergencyActions">---</div>
+                </div>
+                <div class="report-section" style="background: rgba(108,60,225,0.03);">
+                    <div class="label">📞 External Services</div>
+                    <div class="value" id="reportEmergencyExternal">---</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
+                <button onclick="downloadStudentReport()" style="flex:1; background: rgba(255,184,0,0.1); border: 1px solid rgba(255,184,0,0.15); color: #FFB800; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 13px; transition: all 0.3s ease;">
+                    📄 Download PDF
+                </button>
+                <button onclick="closeEmergencyReportModal()" style="flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 13px;">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content">
+            <div class="icon">⚠️</div>
+            <h3>Permanent Deletion</h3>
+            <p>
+                This will permanently delete your account and all associated data.<br>
+                <strong style="color:#FF6B9D;">This cannot be undone.</strong>
+            </p>
+            <div class="modal-actions">
+                <button class="cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="confirm" id="confirmDeleteBtn">🗑️ Delete Forever</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================================
+        // APP STATE
+        // ============================================================
+        let studentId = localStorage.getItem('studentId');
+        let studentName = localStorage.getItem('studentName') || 'Student';
+        let studentRoom = localStorage.getItem('studentRoom') || '---';
+        let allReports = [];
+        let allEvents = [];
+        let allRSVPs = [];
+        let allStudents = [];
+        let allEmergencies = [];
+        let pressTimer = null;
+        let isPressing = false;
+
+        // ============================================================
+        // DOM REFS
+        // ============================================================
+        document.getElementById('studentName').textContent = studentName;
+        document.getElementById('roomBadge').textContent = `🏠 Room ${studentRoom}`;
+        document.getElementById('myRoom').textContent = studentRoom;
+        document.getElementById('reportRoom').textContent = studentRoom;
+        document.getElementById('reportRoomInput').value = studentRoom;
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+
+        // ============================================================
+        // TAB SWITCHING
+        // ============================================================
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                switchTab(tab);
+            });
+        });
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            loadData();
+        }
+
+        // ============================================================
+        // LOAD DATA
+        // ============================================================
+        async function loadData() {
+            await Promise.all([
+                loadStudentReports(),
+                loadEvents(),
+                loadRSVPs(),
+                loadCommunityCount(),
+                loadEmergencyHistory()
+            ]);
+            updateUI();
+        }
+
+        // ============================================================
+        // STUDENT REPORTS
+        // ============================================================
+        async function loadStudentReports() {
+            try {
+                const res = await fetch(`http://localhost:3000/api/maintenance/student/${studentId}`);
+                const data = await res.json();
+                if (data.success) {
+                    allReports = data.reports;
+                }
+            } catch (error) {
+                console.error('Error loading reports:', error);
+            }
+        }
+
+        // ============================================================
+        // EVENTS
+        // ============================================================
+        async function loadEvents() {
+            try {
+                const res = await fetch('http://localhost:3000/api/events');
+                const data = await res.json();
+                if (data.success) {
+                    allEvents = data.events;
+                }
+            } catch (error) {
+                console.error('Error loading events:', error);
+            }
+        }
+
+        // ============================================================
+        // RSVPs
+        // ============================================================
+        async function loadRSVPs() {
+            try {
+                const res = await fetch(`http://localhost:3000/api/rsvp/all`);
+                const data = await res.json();
+                if (data.success) {
+                    allRSVPs = data.rsvps;
+                }
+            } catch (error) {
+                console.error('Error loading RSVPs:', error);
+                allRSVPs = [];
+            }
+        }
+
+        // ============================================================
+        // COMMUNITY COUNT
+        // ============================================================
+        async function loadCommunityCount() {
+            try {
+                const res = await fetch('http://localhost:3000/api/admin/students');
+                const data = await res.json();
+                if (data.success) {
+                    allStudents = data.students;
+                    document.getElementById('communityCount').textContent = allStudents.length;
+                }
+            } catch (error) {
+                console.error('Error loading community count:', error);
+            }
+        }
+
+        // ============================================================
+        // UPDATE UI
+        // ============================================================
+        function updateUI() {
+            const totalReports = allReports.length;
+            const resolvedReports = allReports.filter(r => r.status === 'resolved').length;
+            document.getElementById('myReports').textContent = totalReports;
+            document.getElementById('resolvedReports').textContent = resolvedReports;
+            document.getElementById('upcomingEvents').textContent = allEvents.length;
+
+            // Report table
+            const reportTable = document.getElementById('reportTable');
+            if (allReports.length === 0) {
+                reportTable.innerHTML = `<tr><td colspan="4" class="empty-state"><div class="icon">🔧</div><p>You haven't reported any issues yet</p></td></tr>`;
+            } else {
+                reportTable.innerHTML = allReports.map(r => `
+                    <tr>
+                        <td>${new Date(r.created_at).toLocaleDateString()}</td>
+                        <td>${r.category}</td>
+                        <td>${r.description}</td>
+                        <td><span class="status ${r.status}">${r.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+            document.getElementById('reportCount').textContent = `(${allReports.length})`;
+
+            // History
+            const studentRSVPs = allRSVPs.filter(r => r.student_id == studentId);
+            const activities = [
+                ...allReports.map(r => ({ 
+                    date: r.created_at, 
+                    type: '🛠️ Maintenance', 
+                    desc: r.description, 
+                    status: r.status 
+                })),
+                ...studentRSVPs.map(r => {
+                    const event = allEvents.find(e => e.id == r.event_id);
+                    return {
+                        date: new Date().toISOString(),
+                        type: '📅 RSVP',
+                        desc: `RSVPed to: ${event ? event.title : 'Event'}`,
+                        status: 'confirmed'
+                    };
+                })
+            ].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            const historyTable = document.getElementById('historyTable');
+            if (activities.length === 0) {
+                historyTable.innerHTML = `<tr><td colspan="4" class="empty-state"><div class="icon">📭</div><p>No activity recorded</p></td></tr>`;
+            } else {
+                historyTable.innerHTML = activities.map(a => `
+                    <tr>
+                        <td>${new Date(a.date).toLocaleDateString()}</td>
+                        <td>${a.type}</td>
+                        <td>${a.desc}</td>
+                        <td><span class="status ${a.status === 'resolved' || a.status === 'confirmed' ? 'resolved' : a.status}">${a.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+            document.getElementById('historyCount').textContent = `(${activities.length})`;
+            document.getElementById('activityCount').textContent = `(${activities.length})`;
+
+            // Recent activity
+            const activityTable = document.getElementById('activityTable');
+            const recentActivities = activities.slice(0, 5);
+            if (recentActivities.length === 0) {
+                activityTable.innerHTML = `<tr><td colspan="4" class="empty-state"><div class="icon">📭</div><p>No activity yet</p></td></tr>`;
+            } else {
+                activityTable.innerHTML = recentActivities.map(a => `
+                    <tr>
+                        <td>${new Date(a.date).toLocaleDateString()}</td>
+                        <td>${a.type}</td>
+                        <td>${a.desc}</td>
+                        <td><span class="status ${a.status === 'resolved' || a.status === 'confirmed' ? 'resolved' : a.status}">${a.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+
+            // Events
+            renderEvents();
+
+            // Welcome message
+            const hour = new Date().getHours();
+            let timeGreeting = 'Good Morning';
+            if (hour >= 12 && hour < 17) timeGreeting = 'Good Afternoon';
+            else if (hour >= 17) timeGreeting = 'Good Evening';
+            document.getElementById('welcomeMessage').textContent = `${timeGreeting}, ${studentName}! ✨`;
+        }
+
+        // ============================================================
+        // RENDER EVENTS
+        // ============================================================
+        function renderEvents() {
+            const container = document.getElementById('eventsList');
+            document.getElementById('eventCount').textContent = `(${allEvents.length} events)`;
+            document.getElementById('eventBadge').textContent = allEvents.length;
+
+            if (allEvents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🎉</div>
+                        <p>No upcoming events scheduled</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = allEvents.map(e => {
+                const rsvped = allRSVPs.some(r => r.student_id == studentId && r.event_id == e.id);
+                return `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.04); flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <div style="font-weight:600; color:white;">${e.title}</div>
+                            <div style="font-size:13px; color:rgba(255,255,255,0.3);">
+                                📅 ${new Date(e.date).toLocaleString()} &nbsp;·&nbsp; 📍 ${e.location}
+                            </div>
+                            ${e.description ? `<div style="font-size:13px; color:rgba(255,255,255,0.2); margin-top:2px;">${e.description}</div>` : ''}
+                        </div>
+                        <button class="btn-rsvp ${rsvped ? 'rsvped' : ''}" onclick="toggleRSVP(${e.id})" id="rsvp-${e.id}">
+                            ${rsvped ? '✅ RSVPed' : '🎯 RSVP'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // TOGGLE RSVP
+        // ============================================================
+        async function toggleRSVP(eventId) {
+            try {
+                const res = await fetch('http://localhost:3000/api/rsvp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ student_id: studentId, event_id: eventId })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    if (data.action === 'added') {
+                        showToast('🎉 RSVP confirmed!', 'success');
+                    } else {
+                        showToast('❌ RSVP removed', 'info');
+                    }
+                    loadData();
+                } else {
+                    showToast(data.message || 'Failed to RSVP', 'error');
+                }
+            } catch (error) {
+                showToast('Server error', 'error');
+            }
+        }
+
+        // ============================================================
+        // REPORT ISSUE
+        // ============================================================
+        document.getElementById('reportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const category = document.getElementById('reportCategory').value;
+            const description = document.getElementById('reportDescription').value.trim();
+
+            if (!category || !description) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('http://localhost:3000/api/maintenance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        student_id: studentId,
+                        room_number: studentRoom,
+                        category: category,
+                        description: description
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('✅ Issue reported successfully!', 'success');
+                    document.getElementById('reportForm').reset();
+                    document.getElementById('reportRoomInput').value = studentRoom;
+                    loadData();
+                } else {
+                    showToast(data.message || 'Failed to report issue', 'error');
+                }
+            } catch (error) {
+                showToast('Server error', 'error');
+            }
+        });
+
+        // ============================================================
+        // PANIC BUTTON - EMERGENCY SYSTEM
+        // ============================================================
+        const panicButton = document.getElementById('panicButton');
+
+        panicButton.addEventListener('mousedown', startPress);
+        panicButton.addEventListener('mouseup', endPress);
+        panicButton.addEventListener('mouseleave', endPress);
+        panicButton.addEventListener('touchstart', startPress, { passive: true });
+        panicButton.addEventListener('touchend', endPress, { passive: true });
+
+        function startPress(e) {
+            e.preventDefault();
+            isPressing = true;
+            panicButton.style.transform = 'scale(0.9)';
+            panicButton.style.boxShadow = '0 0 80px rgba(255,0,0,0.5)';
+            
+            pressTimer = setTimeout(() => {
+                if (isPressing) {
+                    if (navigator.vibrate) navigator.vibrate(200);
+                    openEmergencyTypeModal();
+                    resetPress();
+                }
+            }, 2000);
+        }
+
+        function endPress(e) {
+            e.preventDefault();
+            resetPress();
+        }
+
+        function resetPress() {
+            isPressing = false;
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
+            panicButton.style.transform = 'scale(1)';
+            panicButton.style.boxShadow = '0 0 50px rgba(255,0,0,0.2)';
+        }
+
+        // Emergency Type Modal
+        function openEmergencyTypeModal() {
+            document.getElementById('emergencyTypeModal').classList.add('show');
+        }
+
+        function closeEmergencyTypeModal() {
+            document.getElementById('emergencyTypeModal').classList.remove('show');
+        }
+
+        // Report Emergency
+        async function reportEmergency(type) {
+            closeEmergencyTypeModal();
+            
+            const description = prompt(`Describe the ${type} emergency briefly:`, '');
+            if (description === null) return;
+            
+            try {
+                const res = await fetch('http://localhost:3000/api/emergency/report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        student_id: studentId,
+                        student_name: studentName,
+                        room_number: studentRoom,
+                        emergency_type: type,
+                        description: description || 'No description provided'
+                    })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    document.getElementById('confirmEmergencyType').textContent = type;
+                    document.getElementById('emergencyConfirmModal').classList.add('show');
+                    
+                    showToast('🚨 Emergency reported! Admin notified.', 'error');
+                    
+                    setTimeout(() => {
+                        closeEmergencyConfirm();
+                    }, 5000);
+                } else {
+                    showToast('Failed to report emergency. Please try again.', 'error');
+                }
+            } catch (error) {
+                showToast('Server error. Please try again.', 'error');
+            }
+        }
+
+        function closeEmergencyConfirm() {
+            document.getElementById('emergencyConfirmModal').classList.remove('show');
+        }
+
+        // ============================================================
+        // STUDENT EMERGENCY HISTORY
+        // ============================================================
+        async function loadEmergencyHistory() {
+            try {
+                const res = await fetch(`http://localhost:3000/api/emergency/student/${studentId}`);
+                const data = await res.json();
+                if (data.success) {
+                    allEmergencies = data.emergencies;
+                    renderEmergencyHistory(data.emergencies);
+                }
+            } catch (error) {
+                console.error('Error loading emergency history:', error);
+                // Fallback to localStorage
+                const stored = localStorage.getItem('emergencies');
+                const allStored = stored ? JSON.parse(stored) : [];
+                const studentEmergencies = allStored.filter(e => e.student_id == studentId);
+                allEmergencies = studentEmergencies;
+                renderEmergencyHistory(studentEmergencies);
+            }
+        }
+
+        function renderEmergencyHistory(emergencies) {
+            const tbody = document.getElementById('emergencyHistoryTable');
+            document.getElementById('emergencyCount').textContent = `(${emergencies.length})`;
+            
+            if (emergencies.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><div class="icon">📭</div><p>No emergency history</p></td></tr>`;
+                return;
+            }
+            
+            tbody.innerHTML = emergencies.map(e => `
+                <tr>
+                    <td>${new Date(e.reported_at || e.timestamp).toLocaleString()}</td>
+                    <td><span style="color:#ff4444;font-weight:600;">${e.emergency_type || e.type}</span></td>
+                    <td><span class="status ${e.status === 'active' ? 'pending' : 'resolved'}">${e.status}</span></td>
+                    <td>
+                        ${e.status === 'resolved' ? 
+                            `<button class="btn-rsvp" onclick="viewEmergencyReport(${e.id})" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.15);color:#FFB800;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;">
+                                📄 View Report
+                            </button>` : 
+                            `<span style="color:rgba(255,255,255,0.2);font-size:12px;">Pending resolution</span>`
+                        }
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ============================================================
+        // VIEW EMERGENCY REPORT (STUDENT SIDE)
+        // ============================================================
+        async function viewEmergencyReport(emergencyId) {
+            try {
+                const res = await fetch(`http://localhost:3000/api/emergency/student/${studentId}/${emergencyId}`);
+                const data = await res.json();
+                if (data.success) {
+                    populateEmergencyReportModal(data.emergency);
+                } else {
+                    // Fallback to localStorage
+                    const stored = localStorage.getItem('emergencies');
+                    const allStored = stored ? JSON.parse(stored) : [];
+                    const e = allStored.find(em => em.id === emergencyId && em.student_id == studentId);
+                    if (e) {
+                        populateEmergencyReportModal(e);
+                    } else {
+                        showToast('Report not found', 'error');
+                    }
+                }
+            } catch (error) {
+                showToast('Error loading report', 'error');
+            }
+        }
+
+        function populateEmergencyReportModal(e) {
+            document.getElementById('reportEmergencyId').textContent = e.id;
+            document.getElementById('reportEmergencyType').textContent = e.emergency_type || e.type;
+            document.getElementById('reportEmergencyDate').textContent = new Date(e.reported_at || e.timestamp).toLocaleString();
+            document.getElementById('reportEmergencyStatus').textContent = e.status;
+            document.getElementById('reportEmergencyStatus').className = `status ${e.status === 'active' ? 'pending' : 'resolved'}`;
+            document.getElementById('reportEmergencyDescription').textContent = e.description || 'No description provided';
+            document.getElementById('reportEmergencyActions').textContent = e.actions_taken || 'Not specified';
+            document.getElementById('reportEmergencyExternal').textContent = e.external_services_contacted || 'None';
+            document.getElementById('reportEmergencyFull').textContent = e.report_text || 'No report available';
+            document.getElementById('reportEmergencyResolved').textContent = e.resolved_at ? new Date(e.resolved_at).toLocaleString() : 'N/A';
+            document.getElementById('reportEmergencyRoom').textContent = e.room_number || studentRoom;
+            
+            document.getElementById('emergencyReportModal').classList.add('show');
+        }
+
+        function closeEmergencyReportModal() {
+            document.getElementById('emergencyReportModal').classList.remove('show');
+        }
+
+        // ============================================================
+        // DOWNLOAD STUDENT REPORT
+        // ============================================================
+        function downloadStudentReport() {
+            const reportContent = `
+╔══════════════════════════════════════════════════════════════╗
+║              DISNEY RESIDENCE - EMERGENCY REPORT             ║
+║                         #${document.getElementById('reportEmergencyId').textContent}                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  📅 Date: ${document.getElementById('reportEmergencyDate').textContent}                   ║
+║  🚨 Type: ${document.getElementById('reportEmergencyType').textContent}                                ║
+║  🏠 Room: ${document.getElementById('reportEmergencyRoom').textContent}                                   ║
+║                                                              ║
+║  📝 Description:                                             ║
+║  ${document.getElementById('reportEmergencyDescription').textContent}               ║
+║                                                              ║
+║  ✅ Status: ${document.getElementById('reportEmergencyStatus').textContent}                                      ║
+║  📅 Resolved: ${document.getElementById('reportEmergencyResolved').textContent} ║
+║                                                              ║
+║  📋 Report:                                                  ║
+║  ${document.getElementById('reportEmergencyFull').textContent}                   ║
+║                                                              ║
+║  🔧 Actions Taken:                                           ║
+║  ${document.getElementById('reportEmergencyActions').textContent}                       ║
+║                                                              ║
+║  📞 External Services:                                       ║
+║  ${document.getElementById('reportEmergencyExternal').textContent}                  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+`;
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `my-emergency-report-${document.getElementById('reportEmergencyId').textContent}-${new Date().toISOString().slice(0,10)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📄 Report downloaded!', 'success');
+        }
+
+        // ============================================================
+        // DELETE ACCOUNT
+        // ============================================================
+        function confirmDelete() {
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('show');
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+            try {
+                const res = await fetch(`http://localhost:3000/api/admin/students/${studentId}`, {
+                    method: 'DELETE'
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('🗑️ Account permanently deleted', 'error');
+                    localStorage.clear();
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showToast('Failed to delete account', 'error');
+                }
+            } catch (error) {
+                showToast('Server error', 'error');
+            }
+            closeDeleteModal();
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        loadData();
+        setInterval(loadData, 30000);
+
+        // Close modals on click outside
+        document.getElementById('emergencyTypeModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeEmergencyTypeModal();
+        });
+        document.getElementById('emergencyConfirmModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeEmergencyConfirm();
+        });
+        document.getElementById('emergencyReportModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeEmergencyReportModal();
+        });
+        document.getElementById('deleteModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeDeleteModal();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏰 Disney Residence Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b69 30%, #6C3CE1 70%, #FF6B9D 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Stars Animation */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 20px;
+            animation: floatStar 8s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes floatStar {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 32px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #FFB800;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 184, 0, 0.15), inset 0 0 30px rgba(255, 184, 0, 0.05);
+            transform: scale(1.02);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-field-with-icon {
+            padding-left: 52px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFB800 0%, #FF6B9D 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a0a2e;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(255, 184, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        /* Error shake animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.2;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(26, 10, 46, 0.2);
+            border-top: 3px solid #1a0a2e;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-text.hidden {
+            display: none;
+        }
+
+        /* Role indicator - subtle badge showing what was detected */
+        .role-indicator {
+            display: none;
+            text-align: center;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .role-indicator.student {
+            background: rgba(255, 184, 0, 0.15);
+            color: #FFB800;
+            border: 1px solid rgba(255, 184, 0, 0.2);
+        }
+
+        .role-indicator.admin {
+            background: rgba(255, 107, 157, 0.15);
+            color: #FF6B9D;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+        }
+
+        .role-indicator.show {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 32px 24px !important;
+            }
+            .input-field {
+                font-size: 14px;
+                padding: 14px 16px;
+            }
+            .input-field-with-icon {
+                padding-left: 44px;
+            }
+            .input-icon {
+                font-size: 16px;
+                left: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Shapes Background -->
+    <div class="floating-shapes">
+        <div class="shape" style="width: 300px; height: 300px; background: #FF6B9D; top: -100px; left: -100px;"></div>
+        <div class="shape" style="width: 400px; height: 400px; background: #FFB800; bottom: -150px; right: -150px;"></div>
+        <div class="shape" style="width: 200px; height: 200px; background: #6C3CE1; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+    </div>
+
+    <!-- Stars -->
+    <div class="stars">
+        <div class="star" style="top: 10%; left: 5%; animation-delay: 0s;">✦</div>
+        <div class="star" style="top: 20%; right: 8%; animation-delay: 1s;">✦</div>
+        <div class="star" style="bottom: 30%; left: 3%; animation-delay: 2s;">✦</div>
+        <div class="star" style="bottom: 20%; right: 5%; animation-delay: 0.5s;">✦</div>
+        <div class="star" style="top: 50%; left: 2%; animation-delay: 1.5s;">✦</div>
+        <div class="star" style="top: 40%; right: 2%; animation-delay: 2.5s;">✦</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="w-full max-w-md relative z-10">
+        <!-- Logo Section -->
+        <div class="text-center mb-10">
+            <div class="inline-block relative">
+                <div class="text-7xl mb-4 animate-bounce" style="animation-duration: 3s;">🏰</div>
+                <div class="absolute -top-2 -right-2 text-2xl animate-pulse">✨</div>
+            </div>
+            <h1 class="text-5xl font-extrabold text-white tracking-tight" style="text-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                Disney Residence
+            </h1>
+            <p class="text-white/50 mt-2 text-sm font-medium tracking-wider">
+                🎯 Where Magic Meets Comfort
+            </p>
+        </div>
+
+        <!-- Login Card - ONE UNIFIED BLOCK -->
+        <div class="glass-card p-10">
+            <form id="loginForm" class="space-y-5">
+                <!-- Username/Student Number Field -->
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Student Number or Admin Username" 
+                        class="input-field input-field-with-icon"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <!-- Password Field -->
+                <div class="input-wrapper">
+                    <span class="input-icon">🔑</span>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Your Password" 
+                        class="input-field input-field-with-icon"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    <span class="btn-text" id="btnText">
+                        ✨ Let's Go!
+                    </span>
+                    <div class="spinner" id="btnSpinner"></div>
+                </button>
+
+                <!-- Role Indicator (shows what was detected) -->
+                <div id="roleIndicator" class="role-indicator">
+                    <span id="roleIcon">🎓</span>
+                    <span id="roleText">Student</span>
+                </div>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="hidden text-center text-sm font-medium" style="color: #FF6B9D;">
+                    <span id="errorText">Oops! Something went wrong</span>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="mt-4 text-center">
+                    <p class="text-white/30 text-xs">
+                        🏠 520 Beds • Est. 2026
+                    </p>
+                    <p class="text-white/20 text-xs mt-1">
+                        💡 Use your student number or admin username
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8">
+            <p class="text-white/20 text-sm">
+                ✨ Made with ❤️ for Disney Residence ✨
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const errorDiv = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const roleIndicator = document.getElementById('roleIndicator');
+        const roleIcon = document.getElementById('roleIcon');
+        const roleText = document.getElementById('roleText');
+
+        function showError(message) {
+            errorText.textContent = message;
+            errorDiv.classList.remove('hidden');
+            errorDiv.classList.add('shake');
+            setTimeout(() => errorDiv.classList.remove('shake'), 500);
+        }
+
+        function hideError() {
+            errorDiv.classList.add('hidden');
+        }
+
+        function setLoading(isLoading) {
+            if (isLoading) {
+                btnText.classList.add('hidden');
+                btnSpinner.style.display = 'block';
+                loginBtn.disabled = true;
+            } else {
+                btnText.classList.remove('hidden');
+                btnSpinner.style.display = 'none';
+                loginBtn.disabled = false;
+            }
+        }
+
+        function showRoleIndicator(role, identifier) {
+            roleIndicator.classList.add('show');
+            if (role === 'student') {
+                roleIndicator.className = 'role-indicator student show';
+                roleIcon.textContent = '🎓';
+                roleText.textContent = `Student: ${identifier}`;
+            } else if (role === 'admin') {
+                roleIndicator.className = 'role-indicator admin show';
+                roleIcon.textContent = '👑';
+                roleText.textContent = `Admin: ${identifier}`;
+            }
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                roleIndicator.classList.remove('show');
+            }, 3000);
+        }
+
+        // Login Form Submit - AUTO DETECTS STUDENT OR ADMIN
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideError();
+            setLoading(true);
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                showError('✨ Please fill in all fields!');
+                setLoading(false);
+                return;
+            }
+
+            try {
+                // STEP 1: Try student login first
+                const studentResponse = await fetch('http://localhost:3000/api/student/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        student_number: username, 
+                        password: password 
+                    })
+                });
+                const studentData = await studentResponse.json();
+
+                // If student login successful
+                if (studentData.success) {
+                    localStorage.setItem('token', studentData.token);
+                    localStorage.setItem('studentId', studentData.student.id);
+                    localStorage.setItem('studentName', studentData.student.full_name);
+                    localStorage.setItem('studentRoom', studentData.student.room_number);
+                    localStorage.setItem('userRole', 'student');
+                    
+                    showRoleIndicator('student', studentData.student.full_name);
+                    setLoading(false);
+                    
+                    // Redirect after brief delay
+                    setTimeout(() => {
+                        window.location.href = 'student-dashboard.html';
+                    }, 1500);
+                    return;
+                }
+
+                // STEP 2: If student login fails, try admin login
+                const adminResponse = await fetch('http://localhost:3000/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        username: username, 
+                        password: password 
+                    })
+                });
+                const adminData = await adminResponse.json();
+
+                // If admin login successful
+                if (adminData.success) {
+                    localStorage.setItem('token', adminData.token);
+                    localStorage.setItem('adminRole', 'admin');
+                    localStorage.setItem('userRole', 'admin');
+                    
+                    showRoleIndicator('admin', username);
+                    setLoading(false);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 1500);
+                    return;
+                }
+
+                // STEP 3: Both failed
+                showError('❌ Invalid credentials! Please check your username and password.');
+                setLoading(false);
+
+            } catch (error) {
+                showError('🌐 Server not responding! Make sure backend is running.');
+                console.error('Login error:', error);
+                setLoading(false);
+            }
+        });
+
+        // Enter key to submit
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+
+        // Clear error on typing
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', hideError);
+        });
+    </script>
+</body>
+</html>

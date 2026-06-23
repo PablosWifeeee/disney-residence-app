@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: disney-residence-app
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /
