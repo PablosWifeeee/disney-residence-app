@@ -1336,11 +1336,11 @@
         }
 
         // ============================================================
-        // STUDENT REPORTS
+        // STUDENT REPORTS - FIXED
         // ============================================================
         async function loadStudentReports() {
             try {
-                const res = await fetch(`http://localhost:3000/api/maintenance/student/${studentId}`);
+                const res = await fetch(`/api/maintenance/student/${studentId}`);
                 const data = await res.json();
                 if (data.success) {
                     allReports = data.reports;
@@ -1351,11 +1351,11 @@
         }
 
         // ============================================================
-        // EVENTS
+        // EVENTS - FIXED
         // ============================================================
         async function loadEvents() {
             try {
-                const res = await fetch('http://localhost:3000/api/events');
+                const res = await fetch('/api/events');
                 const data = await res.json();
                 if (data.success) {
                     allEvents = data.events;
@@ -1366,11 +1366,11 @@
         }
 
         // ============================================================
-        // RSVPs
+        // RSVPs - FIXED
         // ============================================================
         async function loadRSVPs() {
             try {
-                const res = await fetch(`http://localhost:3000/api/rsvp/all`);
+                const res = await fetch('/api/rsvp/all');
                 const data = await res.json();
                 if (data.success) {
                     allRSVPs = data.rsvps;
@@ -1382,11 +1382,11 @@
         }
 
         // ============================================================
-        // COMMUNITY COUNT
+        // COMMUNITY COUNT - FIXED
         // ============================================================
         async function loadCommunityCount() {
             try {
-                const res = await fetch('http://localhost:3000/api/admin/students');
+                const res = await fetch('/api/admin/students');
                 const data = await res.json();
                 if (data.success) {
                     allStudents = data.students;
@@ -1638,7 +1638,7 @@
             document.getElementById('emergencyTypeModal').classList.remove('show');
         }
 
-        // Report Emergency
+        // Report Emergency - FIXED
         async function reportEmergency(type) {
             closeEmergencyTypeModal();
             
@@ -1681,7 +1681,7 @@
         }
 
         // ============================================================
-        // STUDENT EMERGENCY HISTORY
+        // STUDENT EMERGENCY HISTORY - FIXED
         // ============================================================
         async function loadEmergencyHistory() {
             try {
@@ -1729,7 +1729,7 @@
         }
 
         // ============================================================
-        // VIEW EMERGENCY REPORT (STUDENT SIDE)
+        // VIEW EMERGENCY REPORT (STUDENT SIDE) - FIXED
         // ============================================================
         async function viewEmergencyReport(emergencyId) {
             try {
@@ -1815,7 +1815,7 @@
         }
 
         // ============================================================
-        // DELETE ACCOUNT
+        // DELETE ACCOUNT - FIXED
         // ============================================================
         function confirmDelete() {
             document.getElementById('deleteModal').classList.add('show');

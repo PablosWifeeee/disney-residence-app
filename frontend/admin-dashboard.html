@@ -21,7 +21,6 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             background: linear-gradient(180deg, #1a0a2e 0%, #2d1b69 100%);
             border-right: 1px solid rgba(255, 255, 255, 0.06);
@@ -95,14 +94,12 @@
             font-weight: 600;
         }
 
-        /* Main Content */
         .main-content {
             margin-left: 260px;
             padding: 32px 40px;
             min-height: 100vh;
         }
 
-        /* Top Bar */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -160,7 +157,6 @@
             background: rgba(255, 107, 157, 0.2);
         }
 
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -208,7 +204,6 @@
             margin-top: 4px;
         }
 
-        /* Section Title */
         .section-title {
             font-size: 18px;
             font-weight: 600;
@@ -225,7 +220,6 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Table */
         .table-container {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -341,7 +335,6 @@
             background: rgba(255, 184, 0, 0.2);
         }
 
-        /* Form */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -411,7 +404,6 @@
             box-shadow: 0 10px 30px rgba(255, 184, 0, 0.2);
         }
 
-        /* Insights Cards */
         .insight-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -483,7 +475,6 @@
             text-align: right;
         }
 
-        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -569,7 +560,6 @@
             background: #e85a8a;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -627,7 +617,6 @@
             font-size: 14px;
         }
 
-        /* Emergency Card */
         .emergency-card {
             background: rgba(255, 0, 0, 0.05);
             border: 1px solid rgba(255, 0, 0, 0.1);
@@ -710,7 +699,6 @@
             background: rgba(255, 184, 0, 0.2);
         }
 
-        /* External Services */
         .external-services {
             display: flex;
             gap: 10px;
@@ -792,7 +780,6 @@
             margin-top: 6px;
         }
 
-        /* Tab Content */
         .tab-content {
             display: none;
         }
@@ -801,7 +788,6 @@
             display: block;
         }
 
-        /* Responsive */
         @media (max-width: 1200px) {
             .stats-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -918,7 +904,7 @@
             </div>
         </div>
 
-        <!-- ===== DASHBOARD TAB ===== -->
+        <!-- DASHBOARD TAB -->
         <div id="tab-dashboard" class="tab-content active">
             <div class="stats-grid">
                 <div class="stat-card">
@@ -980,7 +966,7 @@
             </div>
         </div>
 
-        <!-- ===== STUDENTS TAB ===== -->
+        <!-- STUDENTS TAB -->
         <div id="tab-students" class="tab-content">
             <div class="section-title">🎓 Student Management <span class="count" id="studentCountLabel">0 registered</span></div>
             <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
@@ -1003,7 +989,7 @@
             </div>
         </div>
 
-        <!-- ===== MAINTENANCE TAB ===== -->
+        <!-- MAINTENANCE TAB -->
         <div id="tab-maintenance" class="tab-content">
             <div class="section-title">🛠️ All Maintenance Reports <span class="count" id="maintenanceCountLabel">0 total</span></div>
             <div class="table-container">
@@ -1014,7 +1000,7 @@
             </div>
         </div>
 
-        <!-- ===== EVENTS TAB ===== -->
+        <!-- EVENTS TAB -->
         <div id="tab-events" class="tab-content">
             <div class="section-title">📅 Event Management <span class="count" id="eventCountLabel">0 events</span></div>
             <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
@@ -1035,7 +1021,7 @@
             </div>
         </div>
 
-        <!-- ===== EMERGENCY TAB ===== -->
+        <!-- EMERGENCY TAB -->
         <div id="tab-emergency" class="tab-content">
             <div class="section-title">🚨 Emergency Response Center <span class="count" id="emergencyCountLabel">0 active</span></div>
             <div id="activeEmergenciesContainer">
@@ -1052,7 +1038,7 @@
             </div>
         </div>
 
-        <!-- ===== INSIGHTS TAB ===== -->
+        <!-- INSIGHTS TAB -->
         <div id="tab-insights" class="tab-content">
             <div class="section-title">📈 Residence Insights <span class="count">End of Year Analytics</span></div>
             <div class="insight-grid">
@@ -1100,14 +1086,11 @@
 
     </div>
 
-    <!-- ===== MODALS ===== -->
-
-    <!-- Delete Modal -->
+    <!-- MODALS -->
     <div class="modal-overlay" id="deleteModal">
         <div class="modal"><div class="icon">⚠️</div><h3>Delete Student?</h3><p>This will <strong>permanently delete</strong> all student data. This action cannot be undone.</p><div class="modal-actions"><button class="cancel" onclick="closeDeleteModal()">Cancel</button><button class="confirm" id="confirmDeleteBtn">🗑️ Delete Permanently</button></div></div>
     </div>
 
-    <!-- Emergency Detail Modal -->
     <div class="modal-overlay" id="emergencyDetailModal">
         <div class="modal" style="max-width:600px;">
             <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:16px;">
@@ -1139,7 +1122,6 @@
         </div>
     </div>
 
-    <!-- Report Modal -->
     <div class="modal-overlay" id="reportModal">
         <div class="modal" style="max-width:500px;">
             <div class="icon">📝</div><h3>Emergency Report</h3><p>Document the actions taken during this emergency</p>
@@ -1152,7 +1134,6 @@
         </div>
     </div>
 
-    <!-- Call Modal -->
     <div class="modal-overlay" id="callModal">
         <div class="modal" style="max-width:400px;text-align:center;">
             <div style="font-size:48px;margin-bottom:12px;">📞</div>
@@ -1170,9 +1151,7 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ============================================================
-        // STATE
-        // ============================================================
+        // ===== STATE =====
         let deleteTargetId = null;
         let currentEmergencyId = null;
         let allStudents = [];
@@ -1181,9 +1160,7 @@
         let allEmergencies = [];
         let allRSVPs = [];
 
-        // ============================================================
-        // TOAST
-        // ============================================================
+        // ===== TOAST =====
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -1192,9 +1169,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
         }
 
-        // ============================================================
-        // LOGOUT
-        // ============================================================
+        // ===== LOGOUT =====
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.clear();
@@ -1202,9 +1177,7 @@
             }
         }
 
-        // ============================================================
-        // TAB SWITCHING - FIXED
-        // ============================================================
+        // ===== TAB SWITCHING =====
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const tab = this.dataset.tab;
@@ -1213,24 +1186,17 @@
         });
 
         function switchTab(tab) {
-            // Update nav items
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.querySelector(`.nav-item[data-tab="${tab}"]`).classList.add('active');
-            
-            // Update tab content
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             const target = document.getElementById(`tab-${tab}`);
             if (target) {
                 target.classList.add('active');
             }
-            
-            // Reload data
             loadData();
         }
 
-        // ============================================================
-        // DELETE MODAL
-        // ============================================================
+        // ===== DELETE MODAL =====
         function openDeleteModal(id) {
             deleteTargetId = id;
             document.getElementById('deleteModal').classList.add('show');
@@ -1248,9 +1214,7 @@
             }
         });
 
-        // ============================================================
-        // LOAD DATA
-        // ============================================================
+        // ===== LOAD DATA =====
         async function loadData() {
             await Promise.all([
                 loadStudents(),
@@ -1263,12 +1227,10 @@
             updateInsights();
         }
 
-        // ============================================================
-        // STUDENTS
-        // ============================================================
+        // ===== STUDENTS - FIXED =====
         async function loadStudents() {
             try {
-                const res = await fetch('http://localhost:3000/api/admin/students');
+                const res = await fetch('/api/admin/students');
                 const data = await res.json();
                 if (data.success) {
                     allStudents = data.students;
@@ -1302,7 +1264,7 @@
             `).join('');
         }
 
-        // Add Student
+        // Add Student - FIXED
         document.getElementById('addStudentForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const student_number = document.getElementById('sNumber').value.trim();
@@ -1318,7 +1280,7 @@
             }
 
             try {
-                const res = await fetch('http://localhost:3000/api/admin/students', {
+                const res = await fetch('/api/admin/students', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ student_number, password, full_name, room_number, gender, emergency_contact })
@@ -1336,10 +1298,10 @@
             }
         });
 
-        // Delete Student
+        // Delete Student - FIXED
         async function deleteStudent(id) {
             try {
-                const res = await fetch(`http://localhost:3000/api/admin/students/${id}`, {
+                const res = await fetch(`/api/admin/students/${id}`, {
                     method: 'DELETE'
                 });
                 const data = await res.json();
@@ -1354,12 +1316,10 @@
             }
         }
 
-        // ============================================================
-        // MAINTENANCE
-        // ============================================================
+        // ===== MAINTENANCE - FIXED =====
         async function loadMaintenance() {
             try {
-                const res = await fetch('http://localhost:3000/api/maintenance/all');
+                const res = await fetch('/api/maintenance/all');
                 const data = await res.json();
                 if (data.success) {
                     allMaintenance = data.reports;
@@ -1422,7 +1382,7 @@
 
         async function updateStatus(id, status) {
             try {
-                const res = await fetch(`http://localhost:3000/api/maintenance/${id}`, {
+                const res = await fetch(`/api/maintenance/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status })
@@ -1439,12 +1399,10 @@
             }
         }
 
-        // ============================================================
-        // EVENTS
-        // ============================================================
+        // ===== EVENTS - FIXED =====
         async function loadEvents() {
             try {
-                const res = await fetch('http://localhost:3000/api/events');
+                const res = await fetch('/api/events');
                 const data = await res.json();
                 if (data.success) {
                     allEvents = data.events;
@@ -1474,12 +1432,10 @@
             `).join('');
         }
 
-        // ============================================================
-        // RSVPs
-        // ============================================================
+        // ===== RSVPs - FIXED =====
         async function loadRSVPs() {
             try {
-                const res = await fetch('http://localhost:3000/api/rsvp/all');
+                const res = await fetch('/api/rsvp/all');
                 const data = await res.json();
                 if (data.success) {
                     allRSVPs = data.rsvps;
@@ -1494,7 +1450,7 @@
             return allRSVPs.filter(r => r.event_id === eventId).length;
         }
 
-        // Add Event
+        // Add Event - FIXED
         document.getElementById('addEventForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('eTitle').value.trim();
@@ -1508,7 +1464,7 @@
             }
 
             try {
-                const res = await fetch('http://localhost:3000/api/admin/events', {
+                const res = await fetch('/api/admin/events', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ title, description, date, location })
@@ -1526,12 +1482,10 @@
             }
         });
 
-        // ============================================================
-        // EMERGENCIES - FIXED
-        // ============================================================
+        // ===== EMERGENCIES - FIXED =====
         async function loadEmergencies() {
             try {
-                const res = await fetch('http://localhost:3000/api/emergency/all');
+                const res = await fetch('/api/emergency/all');
                 const data = await res.json();
                 if (data.success) {
                     allEmergencies = data.emergencies;
@@ -1546,7 +1500,6 @@
                 }
             } catch (error) {
                 console.error('Error loading emergencies:', error);
-                // If endpoint doesn't exist yet, use localStorage fallback
                 const stored = localStorage.getItem('emergencies');
                 allEmergencies = stored ? JSON.parse(stored) : [];
                 renderActiveEmergencies();
@@ -1610,13 +1563,10 @@
             `).join('');
         }
 
-        // ============================================================
-        // VIEW EMERGENCY
-        // ============================================================
+        // ===== VIEW EMERGENCY - FIXED =====
         async function viewEmergency(id) {
             currentEmergencyId = id;
             try {
-                // Try to get from API first
                 const res = await fetch(`/api/emergency/${id}`);
                 const data = await res.json();
                 if (data.success) {
@@ -1625,7 +1575,6 @@
                     return;
                 }
             } catch (error) {
-                // Fallback to localStorage
                 const e = allEmergencies.find(em => em.id === id);
                 if (e) {
                     populateEmergencyModal(e);
@@ -1656,9 +1605,7 @@
             document.getElementById('emergencyDetailModal').classList.remove('show');
         }
 
-        // ============================================================
-        // EXTERNAL SERVICES
-        // ============================================================
+        // ===== EXTERNAL SERVICES =====
         function showExternalService(type) {
             const container = document.getElementById('externalServiceInfo');
             const content = document.getElementById('externalServiceContent');
@@ -1683,9 +1630,7 @@
             }
         }
 
-        // ============================================================
-        // CALL STUDENT
-        // ============================================================
+        // ===== CALL STUDENT =====
         function callStudent() {
             document.getElementById('callModal').classList.add('show');
             setTimeout(() => {
@@ -1703,9 +1648,7 @@
             showToast('📴 Call ended', 'info');
         }
 
-        // ============================================================
-        // RESOLVE EMERGENCY
-        // ============================================================
+        // ===== RESOLVE EMERGENCY - FIXED =====
         function resolveEmergencyAction(id) {
             if (!id && currentEmergencyId) {
                 id = currentEmergencyId;
@@ -1713,7 +1656,6 @@
             if (!id) return;
             
             if (confirm('Mark this emergency as resolved?')) {
-                // Try API first
                 fetch(`/api/emergency/${id}/status`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -1726,12 +1668,10 @@
                         loadData();
                         closeEmergencyDetail();
                     } else {
-                        // Fallback to localStorage
                         resolveEmergencyLocal(id);
                     }
                 })
                 .catch(() => {
-                    // Fallback to localStorage
                     resolveEmergencyLocal(id);
                 });
             }
@@ -1749,9 +1689,7 @@
             closeEmergencyDetail();
         }
 
-        // ============================================================
-        // REPORT MODAL
-        // ============================================================
+        // ===== REPORT MODAL - FIXED =====
         function openReportModal() {
             document.getElementById('reportModal').classList.add('show');
         }
@@ -1802,9 +1740,7 @@
             }
         });
 
-        // ============================================================
-        // DOWNLOAD REPORT
-        // ============================================================
+        // ===== DOWNLOAD REPORT - FIXED =====
         function downloadReport(id) {
             fetch(`/api/emergency/${id}`)
                 .then(res => res.json())
@@ -1854,9 +1790,7 @@
                 });
         }
 
-        // ============================================================
-        // INSIGHTS
-        // ============================================================
+        // ===== INSIGHTS =====
         function updateInsights() {
             const males = allStudents.filter(s => s.gender === 'Male').length;
             const females = allStudents.filter(s => s.gender === 'Female').length;
@@ -1906,13 +1840,9 @@
             document.getElementById('genderBreakdown').textContent = `👨 ${males} · 👩 ${females} · 🌈 ${others}`;
         }
 
-        function updateStats() {
-            // Already updated in individual load functions
-        }
+        function updateStats() {}
 
-        // ============================================================
-        // EXPORT
-        // ============================================================
+        // ===== EXPORT =====
         function exportInsights() {
             const total = allStudents.length;
             const males = allStudents.filter(s => s.gender === 'Male').length;
@@ -1967,9 +1897,7 @@
             showToast('📊 Report downloaded!', 'success');
         }
 
-        // ============================================================
-        // INIT
-        // ============================================================
+        // ===== INIT =====
         loadData();
         setInterval(loadData, 30000);
     </script>
