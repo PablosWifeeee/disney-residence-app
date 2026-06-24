@@ -1528,7 +1528,7 @@
         // ============================================================
         async function toggleRSVP(eventId) {
             try {
-                const res = await fetch('http://localhost:3000/api/rsvp', {
+                const res = await fetch('/api/rsvp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ student_id: studentId, event_id: eventId })
@@ -1564,7 +1564,7 @@
             }
 
             try {
-                const res = await fetch('http://localhost:3000/api/maintenance', {
+                const res = await fetch('/api/maintenance', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1646,7 +1646,7 @@
             if (description === null) return;
             
             try {
-                const res = await fetch('http://localhost:3000/api/emergency/report', {
+                const res = await fetch('/api/emergency/report', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1685,7 +1685,7 @@
         // ============================================================
         async function loadEmergencyHistory() {
             try {
-                const res = await fetch(`http://localhost:3000/api/emergency/student/${studentId}`);
+                const res = await fetch(`/api/emergency/student/${studentId}`);
                 const data = await res.json();
                 if (data.success) {
                     allEmergencies = data.emergencies;
@@ -1733,7 +1733,7 @@
         // ============================================================
         async function viewEmergencyReport(emergencyId) {
             try {
-                const res = await fetch(`http://localhost:3000/api/emergency/student/${studentId}/${emergencyId}`);
+                const res = await fetch(`/api/emergency/student/${studentId}/${emergencyId}`);
                 const data = await res.json();
                 if (data.success) {
                     populateEmergencyReportModal(data.emergency);
@@ -1827,7 +1827,7 @@
 
         document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/admin/students/${studentId}`, {
+                const res = await fetch(`/api/admin/students/${studentId}`, {
                     method: 'DELETE'
                 });
                 const data = await res.json();

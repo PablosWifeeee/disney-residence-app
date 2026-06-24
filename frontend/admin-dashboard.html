@@ -1617,7 +1617,7 @@
             currentEmergencyId = id;
             try {
                 // Try to get from API first
-                const res = await fetch(`http://localhost:3000/api/emergency/${id}`);
+                const res = await fetch(`/api/emergency/${id}`);
                 const data = await res.json();
                 if (data.success) {
                     const e = data.emergency;
@@ -1714,7 +1714,7 @@
             
             if (confirm('Mark this emergency as resolved?')) {
                 // Try API first
-                fetch(`http://localhost:3000/api/emergency/${id}/status`, {
+                fetch(`/api/emergency/${id}/status`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: 'resolved' })
@@ -1779,7 +1779,7 @@
             }
             
             try {
-                const res = await fetch(`http://localhost:3000/api/emergency/${currentEmergencyId}/report`, {
+                const res = await fetch(`/api/emergency/${currentEmergencyId}/report`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1806,7 +1806,7 @@
         // DOWNLOAD REPORT
         // ============================================================
         function downloadReport(id) {
-            fetch(`http://localhost:3000/api/emergency/${id}`)
+            fetch(`/api/emergency/${id}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {

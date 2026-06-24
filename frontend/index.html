@@ -417,7 +417,7 @@
 
             try {
                 // STEP 1: Try student login first
-                const studentResponse = await fetch('http://localhost:3000/api/student/login', {
+                const studentResponse = await fetch('/api/student/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -446,7 +446,7 @@
                 }
 
                 // STEP 2: If student login fails, try admin login
-                const adminResponse = await fetch('http://localhost:3000/api/admin/login', {
+                const adminResponse = await fetch('/api/admin/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
